@@ -36,6 +36,8 @@ The server will use CORS policy to block all requests to **/refresh_token** that
 
 ### User creation:
 
+Route added to create new users.
+
 ```json
   "uri": "/users"
   "method": "POST",
@@ -77,6 +79,9 @@ The server will use CORS policy to block all requests to **/refresh_token** that
 
 ### Get all users (require authorization with ACCESS TOKEN)
 
+Route created just to test authentication. This route require that access token is passed on request headers with Bearer Token
+
+
 ```json
   "uri": "/users"
   "method": "GET",
@@ -117,6 +122,8 @@ The server will use CORS policy to block all requests to **/refresh_token** that
 
 ### User login:
 
+Route that allows user login. Returns user's data (-password) and access and refresh token.
+
 ```json
   "uri": "/sessions"
   "method": "POST",
@@ -153,6 +160,8 @@ The server will use CORS policy to block all requests to **/refresh_token** that
 ```
 
 ### Renew Access Token (require authentication with REFRESH TOKEN)
+
+This route should be used to renew a access token. The client should inform refresh token to create a new access.
 
 ```json
   "uri": "/sessions/refresh-token"
