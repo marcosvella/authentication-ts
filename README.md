@@ -1,8 +1,9 @@
 ## Authentication-TS
 
-Template created for user creation and authentication via JWT for Nodejs applications with TS, PostgresSQL and typeORM.
+Template created for user creation and authentication via JWT for Nodejs applications with TS, PostgresSQL, Redis and typeORM.
 
 This authentication system is based on Access and Refresh tokens. The logic behind this system is that when a user login, the server will generate two different tokens: One for general consumption of API (low expiration time) and one to renew this first token.
+Tokens will be blacklisted when users logof
 
 ### Refresh Tokens:
 
@@ -15,13 +16,20 @@ The Access token is the one that will be used in every request that the client m
 ### Server-side Protection:
 
 PS: Not implemented yet.
+Server will have a blacklist for tokens that belonged to users that loged out and in the future, will blacklist tokens with unusual behavior.
 The server will use CORS policy to block all requests to **/refresh_token** that aren't from allowed origins. Configure allowed origins at **auth.js -> allowedOrigins[]**
 
 ### Requirements:
 
-- Postgres must be installed. (Can be used with Docker).
+- Postgres and Redis (Can be used with Docker).
 - This project uses the standard database created by postgres "postgres".
 - Database user is 'postgres' and password is 'password'. Change at will.
+
+```shell
+docker run -d --name authentication-postgres -p 5432:5432 -e POSTGRES_PASSWORD=password postgres
+docker run --name redis-blacklist -p 6379:6379 -d redis
+```
+
 - Run one of these commands to install all dependencies:
 
 ```typescript
@@ -80,7 +88,6 @@ Route added to create new users.
 ### Get all users (require authorization with ACCESS TOKEN)
 
 Route created just to test authentication. This route require that access token is passed on request headers with Bearer Token
-
 
 ```json
   "uri": "/users"

@@ -26,6 +26,7 @@ interface Token {
 
 class AuthenticateUserService {
   public async execute({ email, password }: Request): Promise<Response> {
+    console.log(user);
     const usersRepository = getRepository(User);
 
     const user = await usersRepository.findOne({
